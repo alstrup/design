@@ -532,17 +532,15 @@ Given `demo.was` (encoded to `demo.wasm`):
 ```
 and the following JavaScript, run in a browser:
 ```javascript
-fetch('demo.wasm').then(response =>
+fetch('test1.wasm').then(response =>
     response.arrayBuffer()
-).then(buffer =>
-    WebAssembly.compile(buffer)
-).then(module => {
+).then(buffer => {
     var importObj = {
         m: {import1: () => console.log("hello, ")},
         import2: () => console.log("world!\n")
     };
-    var instance = new WebAssembly.Instance(module, importObj); // "hello, "
-    instance.exports.f(); // "world!"
+    var instance = new Wasm.instantiateModule(buffer, importObj); // "hello, "
+     instance.exports.main(); // "world!"
 });
 ```
 
